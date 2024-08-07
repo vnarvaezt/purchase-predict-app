@@ -24,8 +24,13 @@ class Model():
         self.transform_pipeline = joblib.load(path_pipeline)
 
     def predict(self, X):
-        X_ready = self.transform_pipeline.transform(X)
-        return self.model.predict(X_ready)
+        X = X.drop(["user_id", "user_session", "purchased"], axis=1).copy()
+        if self.model:
+            if self.transform_pipeline:
+                for name, encoder in self.transform_pipeline:
+                    X[name] = X[name].fillna("unknown")
+                    X[name] = encoder.transform(X[name])
+        return self.model.predict(X)
 
 
         
