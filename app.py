@@ -7,11 +7,6 @@ from dotenv import load_dotenv
 load_dotenv()
 model = Model()
 app = Flask(__name__)
-@app.route('/')
-
-# def hello_world():
-#     return "Coucou !"
-
 
 @app.route('/', methods=['GET'])
 def home():
@@ -28,4 +23,4 @@ def predict():
 
 if __name__ == "__main__":
     # Please do not set debug=True in production
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)

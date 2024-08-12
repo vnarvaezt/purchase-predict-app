@@ -5,10 +5,11 @@ RUN python3 --version
 RUN mkdir /app
 WORKDIR /app
 ENV ENV=local
-ENV MLFLOW_SERVER=http://127.0.0.1:5000
+ENV MLFLOW_SERVER=http://mlflow:5000
 ENV MLFLOW_REGISTRY_NAME=purchase_predict
 COPY requirements.txt /app/
 COPY app.py /app/
+#COPY mlflow/ /app/mlflow/
 COPY src/ /app/src/
 RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000

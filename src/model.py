@@ -13,8 +13,23 @@ class Model():
 
 
     def load_model(self):
-        client = MlflowClient(self.mlflow_server)
-        mlflow.set_tracking_uri(self.mlflow_server)
+        #client = MlflowClient(self.mlflow_server)
+        
+        #mlflow_tracking_uri = "http://172.17.176.1:8080"
+        mlflow_tracking_uri = "http://mlflow:5000"
+        client = MlflowClient(mlflow_tracking_uri)
+        # Get the MLflow tracking URI
+        #mlflow_tracking_uri = mlflow.get_tracking_uri()
+        #mlflow.set_tracking_uri(self.mlflow_server)
+        mlflow.set_tracking_uri(mlflow_tracking_uri)
+
+        print(client)
+        print(mlflow_tracking_uri)
+
+        registered_models = client.search_registered_models()
+        print("Registered Models:")
+        for model in registered_models:
+            print(model.name)
         # load model
         model_version = client.get_latest_versions(name=self.registry_name, stages=["None"])[0]
         model_uri = f"models:/{self.registry_name}/{model_version.version}"

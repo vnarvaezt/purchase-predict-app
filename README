@@ -1,7 +1,6 @@
 # build docker image
 docker build -t myapp .
-
-# add environment variables when building the image
-docker build -t myapp --build-arg ENV=local MLFLOW_SERVER=http://127.0.0.1:8080 MLFLOW_REGISTRY_NAME=purchase_predict .
 # run image
-docker run myapp
+docker run -p 8080:5000 myapp
+
+# tap ipconfig on the terminal and copy/paste "Adresse IPv4"

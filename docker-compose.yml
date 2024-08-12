@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  mlflow:
+    image: bitnami/mlflow:latest
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=sqlite:///mlflow.db
+      - MLFLOW_ARTIFACT_ROOT=/mlflow/artifacts
+    command: ["mlflow", "server", "--backend-store-uri", "sqlite:///mlflow.db", "--default-artifact-root", "/mlflow/artifacts", "--host", "0.0.0.0"]
+    ports:
+      - "8080:5000"  # Maps port 5000 of the container to port 8080 on the host
+    volumes:
+      - mlflow_data:/mlflow
+    networks:
+      - mlflow_network
+
+networks:
+  mlflow_network:
+    driver: bridge
+
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      MLFLOW_SERVER: http://mlflow:5000
+      MLFLOW_REGISTRY_NAME: purchase_predict
+   
+    depends_on:
+      - mlflow
+    ports:
+      - "5000:5000"
+    networks:
+      - mlflow_network
+
+networks:
+  mlflow_network:
+    driver: bridge
+
+volumes:
+  mlflow_data:
