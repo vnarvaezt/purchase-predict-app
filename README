@@ -1,6 +1,2 @@
-# build docker image
-docker build -t myapp .
-# run image
-docker run -p 8080:5000 myapp
-
-# tap ipconfig on the terminal and copy/paste "Adresse IPv4"
+# build container and run
+docker compose up -d --build

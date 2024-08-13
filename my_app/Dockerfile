@@ -1,4 +1,4 @@
-FROM python
+FROM python:3.9
 RUN apt update
 RUN pip install --upgrade pip
 RUN python3 --version
@@ -12,7 +12,7 @@ COPY app.py /app/
 #COPY mlflow/ /app/mlflow/
 COPY src/ /app/src/
 RUN pip install --no-cache-dir -r requirements.txt
-EXPOSE 5000
-CMD ["flask", "run", "--host", "0.0.0.0"]
+EXPOSE 9000
+#CMD ["flask", "run", "--host", "0.0.0.0"]
 #CMD ["python3", "/app/app.py"]
 # FIXME environment variables can go into a list_env

@@ -16,7 +16,7 @@ class Model():
         #client = MlflowClient(self.mlflow_server)
         
         #mlflow_tracking_uri = "http://172.17.176.1:8080"
-        mlflow_tracking_uri = "http://mlflow:5000"
+        mlflow_tracking_uri = self.mlflow_server
         client = MlflowClient(mlflow_tracking_uri)
         # Get the MLflow tracking URI
         #mlflow_tracking_uri = mlflow.get_tracking_uri()
@@ -31,12 +31,12 @@ class Model():
         for model in registered_models:
             print(model.name)
         # load model
-        model_version = client.get_latest_versions(name=self.registry_name, stages=["None"])[0]
-        model_uri = f"models:/{self.registry_name}/{model_version.version}"
-        self.model = mlflow.sklearn.load_model(model_uri)
-        # transformed pipeline
-        path_pipeline = client.download_artifacts(model_version.run_id, "transform_features.pkl")
-        self.transform_pipeline = joblib.load(path_pipeline)
+        # model_version = client.get_latest_versions(name=self.registry_name, stages=["None"])[0]
+        # model_uri = f"models:/{self.registry_name}/{model_version.version}"
+        # self.model = mlflow.sklearn.load_model(model_uri)
+        # # transformed pipeline
+        # path_pipeline = client.download_artifacts(model_version.run_id, "transform_features.pkl")
+        # self.transform_pipeline = joblib.load(path_pipeline)
 
     def predict(self, X):
         X = X.drop(["user_id", "user_session", "purchased"], axis=1).copy()
