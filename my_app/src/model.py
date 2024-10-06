@@ -12,6 +12,7 @@ class Model():
         self.load_model()
 
 
+
     def load_model(self):
         #client = MlflowClient(self.mlflow_server)
         
@@ -31,16 +32,16 @@ class Model():
         for model in registered_models:
             print(model.name)
         # load model
-        # model_version = client.get_latest_versions(name=self.registry_name, stages=["None"])[0]
-        # model_uri = f"models:/{self.registry_name}/{model_version.version}"
-        # self.model = mlflow.sklearn.load_model(model_uri)
-        # # transformed pipeline
-        # path_pipeline = client.download_artifacts(model_version.run_id, "transform_features.pkl")
-        # self.transform_pipeline = joblib.load(path_pipeline)
+        model_version = client.get_latest_versions(name=self.registry_name, stages=["None"])[0]
+        model_uri = f"models:/{self.registry_name}/{model_version.version}"
+        self.model = mlflow.sklearn.load_model(model_uri)
+        # transformed pipeline
+        path_pipeline = client.download_artifacts(model_version.run_id, "transform_features.pkl")
+        self.transform_pipeline = joblib.load(path_pipeline)
 
     def predict(self, X):
         X = X.drop(["user_id", "user_session", "purchased"], axis=1).copy()
-        if self.model:
+        if self.model:# FIXME Error: "Model has no attribute model"
             if self.transform_pipeline:
                 for name, encoder in self.transform_pipeline:
                     X[name] = X[name].fillna("unknown")

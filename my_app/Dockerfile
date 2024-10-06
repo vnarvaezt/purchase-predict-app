@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 RUN apt update
 RUN pip install --upgrade pip
 RUN python3 --version

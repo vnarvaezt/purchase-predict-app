@@ -8,4 +8,4 @@ RUN apt update && \
     && rm -rf /var/lib/apt/lists/*
 COPY . /app
 EXPOSE 5000
-#CMD ["mlflow", "server", "--host", "0.0.0.0"]
+CMD ["mlflow", "server", "--host", "0.0.0.0"]
