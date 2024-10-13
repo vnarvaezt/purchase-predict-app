@@ -1,2 +1,14 @@
-# build container and run
+# build container and run it
 docker compose up -d --build
+
+Make sure the "mlflow_network" is created.
+This netowrk will allow the service "myapp" and other services, to communicate with mlflow
+
+```Python
+docker network ls
+```
+
+If "mlflow_network" doesnt exist: 
+```Python
+docker network create mlflow_network
+```
